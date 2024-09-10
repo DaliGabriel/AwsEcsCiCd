@@ -6,7 +6,7 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws --version
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
-      - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
+      - REPOSITORY_URI=992382567621.dkr.ecr.us-east-1.amazonaws.com/nodejs-docker-aws-ecs
   build:
     commands:
       - echo Build started on `date`
@@ -21,8 +21,4 @@ phases:
       - echo Writing image definitions file...
       - printf '[{"name":"your.task.definition.container.name","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG > imagedefinitions.json
 artifacts:
-  files:
-    - '**/*'
-  base-directory: base_dir
-  name: nodejs-server-code-p
-  discard-paths: no
+  files: imagedefinitions.json
